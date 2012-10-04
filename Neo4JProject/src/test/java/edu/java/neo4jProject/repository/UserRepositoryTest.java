@@ -66,7 +66,7 @@ public class UserRepositoryTest {
 		userRepository.save(user1);
 		userRepository.save(user2);
 
-		List<User> users = userRepository.findAll().as(List.class);
+		List<User> users = ((List<User>) userRepository.findAll());
 		Assert.assertTrue(users.size() == 2);
 	}
 

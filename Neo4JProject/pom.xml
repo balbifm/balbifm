@@ -4,7 +4,7 @@
 
 	<groupId>edu.uca.java</groupId>
 	<artifactId>neo4jProject</artifactId>
-	<version>2.1.0.BUILD-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>neo4jProject</name>
@@ -13,9 +13,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.1.0.RELEASE</spring.version>
 		<slf4j.version>1.6.1</slf4j.version>
-		<spring-data-neo4j.version>2.1.0.BUILD-SNAPSHOT</spring-data-neo4j.version>
+		<spring-data-neo4j.version>2.0.0.RELEASE</spring-data-neo4j.version>
 		<aspectj.version>1.6.12</aspectj.version>
-		<neo4j.version>1.8.RC1</neo4j.version>
+		<neo4j.version>1.6.M02</neo4j.version>
 	</properties>
 
 	<repositories>
@@ -249,7 +249,7 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-neo4j-rest</artifactId>
-			<version>2.0.0.RELEASE</version>
+			<version>${spring-data-neo4j.version}</version>
 		</dependency>
 
 		<dependency>

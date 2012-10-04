@@ -27,7 +27,7 @@ public class UserServiceTest {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
+	@Autowired 
 	private UserRepository userRepository;
 
 	@Autowired

@@ -3,7 +3,6 @@ package edu.java.neo4jProject.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -17,7 +16,7 @@ public class User {
 	@Indexed(indexName = "username")
 	private String username;
 
-	@RelatedToVia(elementClass = Friendship.class, direction = Direction.BOTH)
+	@RelatedToVia
 	private Set<Friendship> friends = new HashSet<Friendship>();
 
 	public User() {
