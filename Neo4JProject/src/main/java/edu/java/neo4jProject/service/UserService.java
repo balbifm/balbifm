@@ -9,6 +9,8 @@ import org.neo4j.kernel.Traversal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
+
 import edu.java.neo4jProject.entity.RelationshipsTypes;
 import edu.java.neo4jProject.entity.User;
 import edu.java.neo4jProject.repository.UserRepository;
@@ -24,7 +26,7 @@ public class UserService {
 		return userRepository.getMutualFriends(user1.getId(), user2.getId());
 	}
 
-	public Iterable<User> getFriends(User user) {
+	public List<User> getFriends(User user) {
 		TraversalDescription description = Traversal
 				.description()
 				.breadthFirst()
@@ -33,6 +35,7 @@ public class UserService {
 								.withName(RelationshipsTypes.FRIENDS))
 				.evaluator(Evaluators.atDepth(1));
 
-		return userRepository.findAllByTraversal(user, description);
+		return Lists.newArrayList(userRepository.findAllByTraversal(user,
+				description));
 	}
 }
