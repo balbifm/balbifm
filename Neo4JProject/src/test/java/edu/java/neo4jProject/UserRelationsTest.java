@@ -67,7 +67,7 @@ public class UserRelationsTest {
 		friendship = new Friendship(user2, user4);
 		user2.addFriendship(friendship);
 
-		// user2 -- friend -- user4
+		// user2 -- friend -- user3
 		friendship = new Friendship(user2, user3);
 		user2.addFriendship(friendship);
 
@@ -90,6 +90,12 @@ public class UserRelationsTest {
 				RelationshipsTypes.FRIENDS);
 
 		Assert.assertNotNull(relation);
+	}
+
+	@Test
+	public void shallDuplicateRelationship() {
+		friendship = new Friendship(user1, user2);
+		user1.addFriendship(friendship);
 	}
 
 	@Test
