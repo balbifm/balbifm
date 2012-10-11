@@ -42,6 +42,14 @@ public class UserService {
 		return mutualFriends;
 	}
 
+	public List<UserGraph> getRecommendationFriends(UserGraph user) {
+		List<UserGraph> friends = getFriends(user);
+		for (UserGraph userGraph : friends) {
+			getFriends(userGraph);
+		}
+		return null;
+	}
+
 	public Friendship createFriendshipBetween(UserGraph user1, UserGraph user2) {
 		return friendshipRepository.save(new Friendship(user1, user2));
 	}

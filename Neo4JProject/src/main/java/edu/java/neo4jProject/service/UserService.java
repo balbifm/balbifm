@@ -38,4 +38,12 @@ public class UserService {
 		return Lists.newArrayList(userRepository.findAllByTraversal(user,
 				description));
 	}
+
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+
+	public List<User> getFriendsRecomendations(User user) {
+		return userRepository.getRecommendationFriends(user.getId());
+	}
 }

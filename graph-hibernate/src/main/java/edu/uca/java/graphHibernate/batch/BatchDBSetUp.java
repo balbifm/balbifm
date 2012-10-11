@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class BatchDBSetUp {
 
-	private static final int N_NODES = 100000;
-	private static final int N_RELATIONS = 10000000;
+	private static final int N_NODES = 10000;
+	private static final int N_RELATIONS = 1000000;
 
 	/**
 	 * @param args

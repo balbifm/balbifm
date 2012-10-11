@@ -42,7 +42,18 @@ public class PerformanceTest {
 
 		long finishTime = System.currentTimeMillis();
 
-		System.out.println("That took: " + (finishTime - startTime) + " ms");
+		System.out.println("Mutual friends: " + (finishTime - startTime)
+				+ " ms");
+
+		startTime = System.currentTimeMillis();
+
+		List<UserGraph> recommendedFriends = userService
+				.getRecommendationFriends(userOne);
+
+		finishTime = System.currentTimeMillis();
+
+		System.out.println("Recommended friends: " + (finishTime - startTime)
+				+ " ms");
 	}
 
 }

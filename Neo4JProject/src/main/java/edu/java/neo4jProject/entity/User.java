@@ -17,7 +17,7 @@ public class User {
 	private String username;
 
 	@RelatedToVia
-	private Set<Friendship> friends = new HashSet<Friendship>();
+	private Set<Friendship> friendships = new HashSet<Friendship>();
 
 	public User() {
 	}
@@ -42,16 +42,16 @@ public class User {
 		this.username = username;
 	}
 
-	public void setFriends(Set<Friendship> friends) {
-		this.friends = friends;
+	public void addFriendship(Friendship friendship) {
+		friendships.add(friendship);
 	}
 
-	public Set<Friendship> getFriends() {
-		return friends;
+	public Set<Friendship> getFriendships() {
+		return friendships;
 	}
 
-	public void addFriendship(Friendship user) {
-		friends.add(user);
+	public void setFriendships(Set<Friendship> friendships) {
+		this.friendships = friendships;
 	}
 
 	public String toString() {

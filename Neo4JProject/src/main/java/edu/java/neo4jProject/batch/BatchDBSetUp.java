@@ -10,8 +10,8 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 public class BatchDBSetUp {
 
-	private static final int N_NODES = 10000;
-	private static final int N_RELATIONS = 1000000;
+	private static final int N_NODES = 100000;
+	private static final int N_RELATIONS = 100000000;
 
 	/**
 	 * @param args
@@ -40,6 +40,8 @@ public class BatchDBSetUp {
 			if (random <= N_NODES && random2 <= N_NODES)
 				inserter.createRelationship(random, random2, knows,
 						relationProperties);
+			if (i % 50000 == 0)
+				System.out.println(i);
 		}
 	}
 
