@@ -11,7 +11,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 public class BatchDBSetUp {
 
 	private static final int N_NODES = 100000;
-	private static final int N_RELATIONS = 100000000;
+	private static final int N_RELATIONS = 10000000;
 
 	/**
 	 * @param args

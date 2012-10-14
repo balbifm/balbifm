@@ -24,11 +24,16 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	public UserGraph findOne(Long id) {
+		return userRepository.findOne(id);
+	}
+
 	public List<UserGraph> getFriends(UserGraph user) {
 		return userRepository.getFriends(user.getId());
 	}
 
-	public List<UserGraph> getMutualFriends(UserGraph user1, UserGraph user2) {
+	public List<UserGraph> getMutualFriendsFalse(UserGraph user1,
+			UserGraph user2) {
 		List<UserGraph> friendsUser1 = getFriends(user1);
 		List<UserGraph> friendsUser2 = getFriends(user2);
 		List<UserGraph> mutualFriends = new ArrayList<UserGraph>();
@@ -40,6 +45,11 @@ public class UserService {
 			}
 		}
 		return mutualFriends;
+	}
+
+	public List<UserGraph> getMutualFriends(UserGraph userOne, UserGraph userTwo) {
+		return userRepository
+				.getMutualFriends(userOne.getId(), userTwo.getId());
 	}
 
 	public List<UserGraph> getRecommendationFriends(UserGraph user) {

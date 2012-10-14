@@ -1,7 +1,5 @@
 package edu.uca.java.graphHibernate;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.uca.java.graphHibernate.config.MainConfig;
 import edu.uca.java.graphHibernate.entity.UserGraph;
-import edu.uca.java.graphHibernate.repository.UserRepository;
 import edu.uca.java.graphHibernate.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,38 +19,115 @@ import edu.uca.java.graphHibernate.service.UserService;
 @Transactional
 public class PerformanceTest {
 
-	@Autowired
-	private UserRepository userRepository;
+	private static final int N_NODES = 10000;
+	private static final int N_RELATIONS = 1000000;
+
+	private int size;
+	private Long random, random2;
+	private Long startTime, finishTime, queryTime;
+	private UserGraph userOne;
+	private UserGraph userTwo;
 
 	@Autowired
 	private UserService userService;
 
 	@Test
-	public void shallPerformTest() {
-		UserGraph userOne, userTwo;
+	public void shallTestFriendsPerformance() {
+		System.out.println("===== FRIENDS =====");
+		for (int i = 0; i < 10; i++) {
+			size = 0;
+			random = (long) ((Math.random() * ((N_NODES) + 1)) + 1);
 
-		userOne = userRepository.findOne(5000L);
-		userTwo = userRepository.findOne(7000L);
+			userOne = userService.findOne(random);
 
-		long startTime = System.currentTimeMillis();
+			startTime = System.currentTimeMillis();
 
-		List<UserGraph> mutualFriends = userService.getMutualFriends(userOne,
-				userTwo);
+			Iterable<UserGraph> friends = userService.getFriends(userOne);
 
-		long finishTime = System.currentTimeMillis();
+			queryTime = System.currentTimeMillis();
 
-		System.out.println("Mutual friends: " + (finishTime - startTime)
-				+ " ms");
+			for (UserGraph user : friends) {
+				size++;
+			}
 
-		startTime = System.currentTimeMillis();
+			finishTime = System.currentTimeMillis();
 
-		List<UserGraph> recommendedFriends = userService
-				.getRecommendationFriends(userOne);
-
-		finishTime = System.currentTimeMillis();
-
-		System.out.println("Recommended friends: " + (finishTime - startTime)
-				+ " ms");
+			System.out.println("Retrieved " + size + " friends of " + random);
+			System.out.print("Query time: " + (queryTime - startTime)
+					+ " ms || ");
+			System.out.print("Iterate time: " + (finishTime - queryTime)
+					+ " ms || ");
+			System.out.println("Total time: " + (finishTime - startTime)
+					+ " ms");
+		}
 	}
+
+	@Test
+	public void shallTestMutualFriendsCypher() {
+		System.out.println("===== MUTUAL FRIENDS =====");
+		for (int i = 0; i < 10; i++) {
+			size = 0;
+			random = (long) ((Math.random() * ((N_NODES) + 1)) + 1);
+			random2 = (long) ((Math.random() * ((N_NODES) + 1)) + 1);
+
+			userOne = userService.findOne(random);
+			userTwo = userService.findOne(random2);
+
+			startTime = System.currentTimeMillis();
+
+			Iterable<UserGraph> mutualFriends = userService.getMutualFriends(
+					userOne, userTwo);
+
+			queryTime = System.currentTimeMillis();
+
+			for (UserGraph user : mutualFriends) {
+				size++;
+			}
+
+			finishTime = System.currentTimeMillis();
+
+			System.out.println("Retrieved " + size + " mutual friends of "
+					+ random + " and " + random2);
+			System.out.print("Query time: " + (queryTime - startTime)
+					+ " ms || ");
+			System.out.print("Iterate time: " + (finishTime - queryTime)
+					+ " ms || ");
+			System.out.println("Total time: " + (finishTime - startTime)
+					+ " ms");
+		}
+	}
+
+	// @Test
+	// public void shallTestRecFriendsCypher() {
+	// System.out.println("===== REC FRIENDS CYPHER =====");
+	// for (int i = 0; i < 10; i++) {
+	// size = 0;
+	// random = (long) ((Math.random() * ((N_NODES) + 1)) + 1);
+	//
+	// userOne = userService.findOne(random);
+	//
+	// startTime = System.currentTimeMillis();
+	//
+	// Iterable<UserGraph> recFriends = userService
+	// .getRecommendationFriends(userOne);
+	//
+	// queryTime = System.currentTimeMillis();
+	//
+	// for (UserGraph user : recFriends) {
+	// size++;
+	// }
+	//
+	// finishTime = System.currentTimeMillis();
+	//
+	// System.out.println("Retrieved " + size + " rec friends of "
+	// + random + " by cypher");
+	// System.out.print("Query time: " + (queryTime - startTime)
+	// + " ms || ");
+	// System.out.print("Iterate time: " + (finishTime - queryTime)
+	// + " ms || ");
+	// System.out.println("Total time: " + (finishTime - startTime)
+	// + " ms");
+	// }
+	// }
 
 }
